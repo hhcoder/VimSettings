@@ -7,3 +7,4 @@ git clone https://github.com/vim-scripts/taglist.vim
 git clone https://github.com/vim-scripts/tComment 
 git clone https://github.com/scrooloose/nerdtree.git
 git clone https://github.com/wesQ3/vim-windowswap 
+git clone https://github.com/MattesGroeger/vim-bookmarks
