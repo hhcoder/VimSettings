@@ -25,9 +25,9 @@ set bs=2
 set exrc
 set secure
 
-" filetype indent on
+filetype indent on
 
-" syntax on
+syntax on
 
 set ruler
 
@@ -37,13 +37,13 @@ set showmatch
 
 set ignorecase
 set incsearch
-"set hlsearch
+set hlsearch
 
 set number
 
 set nowrap
 
-set guifont=Courier_New:h11
+set guifont=Courier_New:h9:cANSI:q
 
 set clipboard=unnamed
 
