@@ -43,7 +43,7 @@ set number
 
 set nowrap
 
-set guifont=Courier_New:h9:cANSI:q
+set guifont=Courier_New:h10:cANSI:q
 
 set clipboard=unnamed
 
@@ -57,7 +57,15 @@ set omnifunc=syntaxcomplete#Complete
 let SuperTabClosePreviewOnPopupClose=0
 
 " Clang Complete Settings
-let g:clang_library_path="/usr2/hunghsin/lib/clang/lib"
+"if has("unix") " For environment at work (compiled locally)
+"  let g:clang_library_path= = "~/mytools/bin/ctags"
+"else
+if has("win32")
+  let g:clang_library_path="c:/bin/ctags.exe"
+elseif has("win32unix") " For Cygwin
+  let g:clang_library_path="/usr/bin/ctags"
+endif
+
 let g:clang_use_library=1
 " if there's an error, allow us to see it
 " let g:clang_complete_copen=1
@@ -105,14 +113,46 @@ nnoremap <unique><Leader>ss : w<CR>
 nnoremap <unique> <Leader>oo : NERDTree<CR>
 
 "CTags
-map <F5> :!/usr2/hunghsin/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+map <F5> :!/usr/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 "map <F5> :!/usr2/hunghsin/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q -f "%:p:h\\tags" <CR>
 "TagList
-let Tlist_Ctags_Cmd = '/usr2/hunghsin/bin/ctags'
+"if has("unix") " For environment at work (compiled locally)
+"  let Tlist_Ctags_Cmd = "~/mytools/bin/ctags"
+"elseif has("win32")
+"  let Tlist_Ctags_Cmd="c:/bin/ctags.exe"
+"elseif has("win32unix") " For Cygwin
+"  let Tlist_Ctags_Cmd="/usr/bin/ctags"
+"endif
+let g:Tlist_WinWidth=60
+
 map <unique> <Leader>tt :TlistToggle<CR>
 
 "Window Swap
 ",ww -> change window -> ,ww 
+
+"CScope
+if has("cscope")
+    set csprg=/usr/bin/cscope
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+   if filereadable("cscope.out")
+       cs add cscope.out
+" else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+        endif
+set csverb
+endif
+
+let db = findfile("cscope.out", ".;")
+if (!empty(db))
+    let path = strpart(db, 0, match(db, "/cscope.out$"))
+    set nocscopeverbose " suppress 'duplicate connection' error
+    exe "cs add " . db . " " . path
+    set cscopeverbose
+endif
 
 "SrcExplorer
 " // The switch of the Source Explorer
