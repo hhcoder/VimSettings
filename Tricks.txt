@@ -1,0 +1,1 @@
+Copy to clipboard: Use the hotkey "+y for yanking (copying) and "+p for pasting to and from the system clipboard.
