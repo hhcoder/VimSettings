@@ -11,3 +11,11 @@ On GVim for Windows
     - make a dir in /c/Program Files (x86)/Vim/vim80/bundle
     - git clone all plug-ins into bundle
 
+Ctags command
+    - Linux/Cygwin: usr/bin/ctags
+    - ctags -R *
+    - ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .
+
+cscope -R -b 
+    - the '-R' makes Cscope parse all subdirectories, not just the current directory).  '-b' flag (which tells Cscope to just build the database, then exit
+    
