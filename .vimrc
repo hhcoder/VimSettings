@@ -45,7 +45,8 @@ set nowrap
 
 set guifont=Courier_New:h10:cANSI:q
 
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard=unnamedplus,autoselect,exclude:cons\\\\|linux
 
 "Omni Completion
 set omnifunc=syntaxcomplete#Complete
@@ -63,7 +64,7 @@ let SuperTabClosePreviewOnPopupClose=0
 if has("win32")
   let g:clang_library_path="c:/bin/ctags.exe"
 elseif has("win32unix") " For Cygwin
-  let g:clang_library_path="/usr/bin/ctags"
+  let g:clang_library_path="/usr/bin/clang"
 endif
 
 let g:clang_use_library=1
@@ -146,13 +147,49 @@ if has("cscope")
 set csverb
 endif
 
-let db = findfile("cscope.out", ".;")
-if (!empty(db))
-    let path = strpart(db, 0, match(db, "/cscope.out$"))
-    set nocscopeverbose " suppress 'duplicate connection' error
-    exe "cs add " . db . " " . path
-    set cscopeverbose
+if has('cscope')
+    set cscopetag cscopeverbose
+
+    if has('quickfix')
+        set cscopequickfix=s-,c-,d-,i-,t-,e-
+    endif
+
+    cnoreabbrev csa cs add
+    cnoreabbrev csf cs find
+    cnoreabbrev csk cs kill
+    cnoreabbrev csr cs reset
+    cnoreabbrev css cs show
+    cnoreabbrev csh cs help
+
+    command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
+
+" let db = findfile("cscope.out", ".;")
+" if (!empty(db))
+"     let path = strpart(db, 0, match(db, "/cscope.out$"))
+"     set nocscopeverbose " suppress 'duplicate connection' error
+"     exe "cs add " . db . " " . path
+"     set cscopeverbose
+" endif
+
+function LoadCscope()
+if (executable("cscope") && has("cscope"))
+    let UpperPath = findfile("cscope.out", ".;")
+    if (!empty(UpperPath))
+        let path = strpart(UpperPath, 0, match(UpperPath, "cscope.out$") - 1)
+        if (!empty(path))
+            let s:CurrentDir = getcwd()
+            let direct = strpart(s:CurrentDir, 0, 2) 
+            let s:FullPath = direct . path
+            let s:AFullPath = globpath(s:FullPath, "cscope.out")
+            let s:CscopeAddString = "cs add " . s:AFullPath . " " . s:FullPath 
+            execute s:CscopeAddString 
+        endif
+    endif
+endif
+endfunction
+
+command LoadCscope call LoadCscope()
 
 "SrcExplorer
 " // The switch of the Source Explorer
