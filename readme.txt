@@ -1,12 +1,12 @@
-.vimrc
-
-sudo apt-get install ctags
-sudo apt-get install cscope
+# vimrc
+git clone https://github.com/hunghsinwu/VimSettings
+cp VimSettings/.vimrc ~/
 
 # pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
+# plug in
 cd ~/.vim/bundle
 git clone https://github.com/Rip-Rip/clang_complete 
 git clone https://github.com/vim-scripts/genutils 
@@ -19,6 +19,10 @@ git clone https://github.com/scrooloose/nerdtree.git
 git clone https://github.com/wesQ3/vim-windowswap 
 git clone https://github.com/MattesGroeger/vim-bookmarks
 git clone https://github.com/Valloric/YouCompleteMe
+
+# cscope and ctags
+sudo apt-get install cscope
+sudo apt-get install ctags
 
 
 On Cygwin:
