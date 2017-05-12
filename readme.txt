@@ -20,10 +20,14 @@ git clone https://github.com/wesQ3/vim-windowswap
 git clone https://github.com/MattesGroeger/vim-bookmarks
 git clone https://github.com/Valloric/YouCompleteMe
 
-# cscope and ctags
+# cscope and ctags, linux
 sudo apt-get install cscope
 sudo apt-get install ctags
 
+# cscope and ctags, Mac
+# after install homebrew
+brew install cscope
+brew install ctags
 
 On Cygwin:
     - copy the bundle and .vimrc to $HOME/
